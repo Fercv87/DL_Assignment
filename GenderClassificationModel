@@ -1,0 +1,33 @@
+digraph {
+	0 [label=Constant]
+	"/Constant_output_0" -> 0
+	1 [label=Reshape]
+	1 -> onnx:"":Reshape_0
+	1 -> "/Constant_output_0"
+	"/Reshape_output_0" -> 1
+	2 [label=Gemm]
+	2 -> "/Reshape_output_0"
+	2 -> "fc1.weight"
+	2 -> "fc1.bias"
+	"/fc1/Gemm_output_0" -> 2
+	3 [label=Relu]
+	3 -> "/fc1/Gemm_output_0"
+	"/Relu_output_0" -> 3
+	4 [label=Gemm]
+	4 -> "/Relu_output_0"
+	4 -> "fc2.weight"
+	4 -> "fc2.bias"
+	"/fc2/Gemm_output_0" -> 4
+	5 [label=Relu]
+	5 -> "/fc2/Gemm_output_0"
+	"/Relu_1_output_0" -> 5
+	6 [label=Gemm]
+	6 -> "/Relu_1_output_0"
+	6 -> "fc3.weight"
+	6 -> "fc3.bias"
+	"/fc3/Gemm_output_0" -> 6
+	7 [label=LogSoftmax]
+	7 -> "/fc3/Gemm_output_0"
+	14 -> 7
+	rankdir=RL
+}
